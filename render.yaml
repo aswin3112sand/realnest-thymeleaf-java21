@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: realnest
+    env: docker
+    plan: starter
+    dockerfilePath: Dockerfile
+    dockerCommand: java -jar app.jar --server.port=$PORT
+    numInstances: 1
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: default
