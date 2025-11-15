@@ -1,19 +1,28 @@
-# RealNest – Thymeleaf Starter (Java 21)
+# RealNest – Spring Boot Real Estate App
 
-Run:
-1) Install Java 21 & Maven
-2) `mvn spring-boot:run`
-Open http://localhost:9090
+- Spring Boot + Maven + Thymeleaf
+- Browse properties, add listings, admin dashboard, etc.
+- Ready to deploy on Render (Java runtime).
 
-Uses H2 for quick start. Switch to MySQL by editing `application.yml`.
+## Run locally
 
-Default admin login: `admin3112@gmail.com` / `nextnext`.
+```bash
+mvn spring-boot:run
+```
 
-## Deploying on Render
+### Build
 
-1. Install the [Render CLI](https://render.com/docs/cli) and log in (`render login`).
-2. From the project root run `render blueprint deploy render.yaml`.
-3. The provided `render.yaml` builds the Docker image, runs `java -jar app.jar --server.port=$PORT`, and exposes the HTTP port Render assigns.
-4. Customize environment variables in `render.yaml` (for example `SPRING_PROFILES_ACTIVE=prod` and any database secrets) before deploying.
+```bash
+mvn clean package
+```
 
-Render automatically redeploys on pushes when `autoDeploy` is enabled in the blueprint.
+## Deploy on Render
+
+1. Commit and push the latest code to GitHub.
+2. Configure Render environment variables for database access, Cloudinary media keys, and any other secrets.
+3. **Build Command**
+   - Preferred: `./mvnw clean package -DskipTests`
+   - Fallback (without the wrapper): `mvn clean package -DskipTests`
+4. **Start Command**
+   - `java -jar target/realnest-0.0.1-SNAPSHOT.jar`
+5. If the artifact version changes, adjust the jar name above to match the value generated in `target/`.
