@@ -1,0 +1,13 @@
+com\realnest\RealnestApplicationTests.class
+com\realnest\controller\AdminControllerTest.class
+com\realnest\controller\HomeControllerTest.class
+com\realnest\controller\SecurityAccessTest.class
+com\realnest\repository\CustomerRepositoryTest.class
+com\realnest\controller\AuthControllerTest.class
+com\realnest\controller\CustomerControllerTest.class
+com\realnest\service\CustomerServiceTest.class
+com\realnest\service\EnquiryServiceTest.class
+com\realnest\service\PropertyServiceTest.class
+com\realnest\repository\EnquiryRepositoryTest.class
+com\realnest\repository\PropertyRepositoryTest.class
+com\realnest\controller\EnquiryControllerTest.class

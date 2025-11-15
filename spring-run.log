@@ -1,0 +1,39 @@
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.5)
+
+2025-11-07T18:46:06.475Z  INFO 8910 --- [           main] com.realnest.RealnestApplication         : Starting RealnestApplication using Java 21.0.8 with PID 8910 (/mnt/c/Users/riote/Downloads/realnest-thymeleaf-java21/target/classes started by root in /mnt/c/Users/riote/Downloads/realnest-thymeleaf-java21)
+2025-11-07T18:46:06.483Z  INFO 8910 --- [           main] com.realnest.RealnestApplication         : No active profile set, falling back to 1 default profile: "default"
+2025-11-07T18:46:10.375Z  INFO 8910 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-07T18:46:11.077Z  INFO 8910 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 680 ms. Found 2 JPA repository interfaces.
+2025-11-07T18:46:13.436Z  INFO 8910 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 9091 (http)
+2025-11-07T18:46:13.508Z  INFO 8910 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-11-07T18:46:13.509Z  INFO 8910 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2025-11-07T18:46:13.648Z  INFO 8910 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-11-07T18:46:13.651Z  INFO 8910 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 7040 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-11-07T18:46:14.178Z  INFO 8910 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-07T18:46:14.790Z  INFO 8910 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-11-07T18:46:15.033Z  INFO 8910 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-11-07T18:46:17.227Z  INFO 8910 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-07T18:46:17.399Z  INFO 8910 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-11-07T18:46:18.176Z  INFO 8910 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@66b31d46
+2025-11-07T18:46:18.186Z  INFO 8910 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-11-07T18:46:23.981Z  INFO 8910 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-07T18:46:24.334Z  INFO 8910 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-07T18:46:25.185Z  INFO 8910 --- [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-07T18:46:28.358Z  WARN 8910 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-11-07T18:46:28.614Z  INFO 8910 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2025-11-07T18:46:31.397Z  INFO 8910 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 9091 (http) with context path '/'
+2025-11-07T18:46:31.408Z  INFO 8910 --- [           main] com.realnest.RealnestApplication         : Started RealnestApplication in 27.048 seconds (process running for 28.106)
+Hibernate: select count(*) from property p1_0
+2025-11-07T19:48:42.355Z  INFO 8910 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-11-07T19:48:42.549Z  INFO 8910 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-11-07T19:48:42.596Z  INFO 8910 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

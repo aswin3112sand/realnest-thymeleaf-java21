@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RealnestApplication<realnest>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.realnest.RealnestApplication",
+            "projectName": "realnest",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

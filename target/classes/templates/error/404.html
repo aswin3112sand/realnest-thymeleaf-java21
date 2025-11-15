@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Not Found</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <h2>Sorry, we couldn't find that.</h2>
+  <p th:text="${message}">The requested resource was not found.</p>
+  <a th:href="@{/properties}">Back to listings</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>RealNest - Customers</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <div class="page-header">
+    <h2>Customers</h2>
+    <a class="link-button" th:href="@{/admin/customers/new}">Add Customer</a>
+  </div>
+  <div th:if="${successMessage}" class="flash" th:text="${successMessage}">Saved</div>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Photo</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(customers)}">
+      <td colspan="5">No customers found.</td>
+    </tr>
+    <tr th:each="c : ${customers}">
+      <td th:text="${c.name}"></td>
+      <td th:text="${c.email}"></td>
+      <td th:text="${c.phone}"></td>
+      <td>
+        <img th:if="${c.photoPath != null}"
+             th:src="@{${c.photoPath}}"
+             width="100"
+             alt="Customer photo"/>
+      </td>
+      <td>
+        <a th:href="@{'/admin/customers/edit/' + ${c.id}}">Edit</a>
+        <a th:href="@{'/admin/customers/delete/' + ${c.id}}" onclick="return confirm('Delete this customer?');">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
