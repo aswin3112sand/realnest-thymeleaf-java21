@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Admin - Users</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+  <style>
+    .table-wrapper {
+      margin-top: 2rem;
+      background: rgba(9, 13, 28, 0.85);
+      border-radius: 18px;
+      padding: 1.5rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+    }
+    th {
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--muted-text);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    tr + tr {
+      border-top: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .badge-role {
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: rgba(94, 252, 232, 0.12);
+      color: var(--accent);
+    }
+    .user-actions {
+      display: inline-flex;
+      gap: 0.5rem;
+    }
+    .user-actions form {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <h2>Registered Users</h2>
+  <div th:if="${successMessage}" class="flash" th:text="${successMessage}">Saved</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.id}">1</td>
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.email}">email</td>
+        <td th:text="${user.phone ?: '-'}">phone</td>
+        <td><span class="badge-role" th:text="${user.role}">ADMIN</span></td>
+        <td th:text="${#temporals.format(user.createdAt, 'MMM d, yyyy')}">Date</td>
+        <td>
+          <div class="user-actions">
+            <a class="link-button secondary" th:href="@{'/admin/users/' + ${user.id} + '/edit'}">Edit</a>
+            <form method="post" th:action="@{'/admin/users/' + ${user.id} + '/delete'}"
+                  onsubmit="return confirm('Delete this user?');">
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+              <button class="link-button danger" type="submit">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
+

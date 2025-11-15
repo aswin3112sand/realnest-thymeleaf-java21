@@ -1,0 +1,1 @@
+package com.realnest.property; public enum PropertyType { SALE, RENT }

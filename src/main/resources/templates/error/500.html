@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Something went wrong</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <h2>Unexpected error</h2>
+  <p>We hit a snag while processing your request.</p>
+  <pre th:text="${message}" style="background:#f3f4f6;padding:1rem;border-radius:12px;"></pre>
+  <a th:href="@{/}">Go home</a>
+</div>
+</body>
+</html>

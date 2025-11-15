@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${editing} ? 'Edit Customer' : 'Add Customer'">Add Customer</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <h2 th:text="${editing} ? 'Edit Customer' : 'Add Customer'">Add Customer</h2>
+  <form th:object="${customer}"
+        th:action="${editing} ? @{'/admin/customers/' + ${customer.id}} : @{/admin/customers}"
+        method="post"
+        enctype="multipart/form-data">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    <input type="hidden" th:if="${customer.id != null}" th:field="*{id}"/>
+    <div th:classappend="${#fields.hasErrors('name')}? ' has-error'">
+      <label for="name">Name</label>
+      <input id="name" type="text" th:field="*{name}" placeholder="Customer name" required/>
+      <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</small>
+    </div>
+    <div th:classappend="${#fields.hasErrors('email')}? ' has-error'">
+      <label for="email">Email</label>
+      <input id="email" type="email" th:field="*{email}" placeholder="email@example.com" required/>
+      <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</small>
+    </div>
+    <div th:classappend="${#fields.hasErrors('phone')}? ' has-error'">
+      <label for="phone">Phone</label>
+      <input id="phone" type="text" th:field="*{phone}" placeholder="+91 90000 00000" required/>
+      <small class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone error</small>
+    </div>
+    <div>
+      <label for="photo">Photo</label>
+      <input id="photo" type="file" name="file" accept="image/*"/>
+      <div th:if="${customer.photoPath != null}">
+        <p>Current photo:</p>
+        <img th:src="@{${customer.photoPath}}" width="120" alt="Customer photo"/>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="link-button" type="submit" th:text="${editing} ? 'Update' : 'Save'">Save</button>
+      <a class="link-button secondary" th:href="@{/customers}">Cancel</a>
+    </div>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Login</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body class="auth-body">
+<div th:replace="~{fragments/header :: header}"></div>
+<main class="auth-page">
+  <div class="auth-wrapper">
+    <section class="auth-card">
+      <header class="auth-card__header">
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Enter your credentials to access the dashboard.</p>
+      </header>
+
+      <div th:if="${param.success}" class="auth-alert auth-alert--success">Account created! Please login.</div>
+      <div th:if="${param.logout}" class="auth-alert auth-alert--info">Logged out successfully.</div>
+      <div th:if="${param.error}" class="auth-alert auth-alert--danger">
+        Invalid credentials. Please try again.
+      </div>
+
+      <form method="post" th:action="@{/login}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <div class="auth-field">
+          <label for="username">Email</label>
+          <input id="username" type="text" name="username" required/>
+        </div>
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <input id="password" type="password" name="password" required/>
+        </div>
+        <button type="submit" class="auth-submit">Login</button>
+      </form>
+
+      <p class="auth-footer">
+        Don’t have an account?
+        <a th:href="@{/register}">Create one</a>
+      </p>
+    </section>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Admin Dashboard - RealNest</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <h2>Admin Dashboard</h2>
+  <section class="stats-grid">
+    <article class="stat-card">
+      <p>Total properties</p>
+      <h3 th:text="${totalProperties}">0</h3>
+    </article>
+    <article class="stat-card">
+      <p>Approved</p>
+      <h3 th:text="${approvedProperties}">0</h3>
+    </article>
+    <article class="stat-card">
+      <p>Pending approval</p>
+      <h3 th:text="${pendingProperties}">0</h3>
+    </article>
+    <article class="stat-card">
+      <p>Customers</p>
+      <h3 th:text="${totalCustomers}">0</h3>
+    </article>
+    <article class="stat-card">
+      <p>Enquiries</p>
+      <h3 th:text="${totalEnquiries}">0</h3>
+    </article>
+  </section>
+
+  <section>
+    <div class="page-header">
+      <h3>Latest enquiries</h3>
+      <a class="link-button" th:href="@{/admin/enquiries}">View all</a>
+    </div>
+    <table>
+      <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Property</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${#lists.isEmpty(recentEnquiries)}">
+        <td colspan="6">No enquiries yet.</td>
+      </tr>
+      <tr th:each="e : ${recentEnquiries}">
+        <td th:text="${e.name}">Name</td>
+        <td th:text="${e.email}">Email</td>
+        <td th:text="${e.phone}">Phone</td>
+        <td>
+          <a th:href="@{'/properties/' + ${e.property.id}}"
+             th:text="${e.property.title}">Property</a>
+        </td>
+        <td th:text="${e.status}">Status</td>
+        <td th:text="${#temporals.format(e.createdAt, 'MMM d, yyyy HH:mm')}">Date</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+</body>
+</html>
+

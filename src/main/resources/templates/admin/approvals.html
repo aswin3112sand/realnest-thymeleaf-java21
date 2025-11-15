@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Pending Approvals</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <h2>Pending Approvals</h2>
+  <div th:if="${successMessage}" class="flash" th:text="${successMessage}">Approved</div>
+  <div class="grid" th:if="${page != null and !page.empty}">
+    <div class="card" th:each="p : ${page.content}">
+      <img th:if="${p.imageUrl != null}" th:src="@{${p.imageUrl}}" th:alt="${p.title}"/>
+      <strong th:text="${p.title}">Title</strong>
+      <div th:text="${p.location}">Location</div>
+      <div th:text="${p.type}">Type</div>
+      <div th:text="${#numbers.formatCurrency(p.price)}">$0</div>
+      <div class="card-actions">
+        <a class="link-button secondary" th:href="@{'/properties/' + ${p.id}}">View</a>
+        <form th:action="@{/admin/approve/{id}(id=${p.id})}" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+          <button type="submit">Approve</button>
+        </form>
+        <a class="link-button medium" th:href="@{'/admin/properties/' + ${p.id} + '/edit'}">Edit</a>
+        <form th:action="@{'/admin/properties/' + ${p.id} + '/delete'}"
+              method="post"
+              onsubmit="return confirm('Delete this listing?');">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+          <button class="link-button danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <p th:if="${page == null or page.empty}">No pending listings.</p>
+  <div th:replace="~{fragments/pagination :: pager(${page}, '/admin/approvals', ${searchParams})}"></div>
+</div>
+</body>
+</html>

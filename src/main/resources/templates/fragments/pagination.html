@@ -1,0 +1,20 @@
+<div th:fragment="pager(page, basePath, params)"
+     xmlns:th="http://www.thymeleaf.org">
+  <div class="pagination"
+       th:if="${page != null and page.totalPages > 1}"
+       th:with="loc=${params.location} != null ? params.location : '',type=${params.type} != null ? params.type : '',min=${params.min} != null ? params.min : '',max=${params.max} != null ? params.max : '',status=${params.status} != null ? params.status : ''">
+    <a th:if="${page.hasPrevious()}"
+       th:href="@{|${basePath}?page=${page.number - 1}&size=${page.size}&location=${loc}&type=${type}&min=${min}&max=${max}&status=${status}|}">
+      Previous
+    </a>
+    <span th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+          th:classappend="${i == page.number}? 'active'">
+      <a th:text="${i + 1}"
+         th:href="@{|${basePath}?page=${i}&size=${page.size}&location=${loc}&type=${type}&min=${min}&max=${max}&status=${status}|}">1</a>
+    </span>
+    <a th:if="${page.hasNext()}"
+       th:href="@{|${basePath}?page=${page.number + 1}&size=${page.size}&location=${loc}&type=${type}&min=${min}&max=${max}&status=${status}|}">
+      Next
+    </a>
+  </div>
+</div>

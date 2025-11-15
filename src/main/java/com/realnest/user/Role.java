@@ -1,0 +1,1 @@
+package com.realnest.user; public enum Role { ADMIN, CUSTOMER }

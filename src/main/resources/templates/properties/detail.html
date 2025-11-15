@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${property.title} + ' - RealNest'">Property</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container property-detail">
+  <section class="detail-header">
+    <div>
+      <p class="eyebrow">RealNest listing</p>
+      <h1 th:text="${property.title}">Luxury home</h1>
+      <p class="subtext" th:text="${property.location}">Location</p>
+      <div class="badges">
+        <span class="badge" th:text="${property.type}">SALE</span>
+        <span class="badge approved" th:if="${property.approved}">Active</span>
+        <span class="badge pending" th:if="${!property.approved}">Pending</span>
+      </div>
+    </div>
+    <div class="price-stack">
+      <p>Price</p>
+      <h2 th:text="${#numbers.formatCurrency(property.price)}">$0</h2>
+      <div class="card-actions" th:if="${canManage}">
+        <a class="link-button" th:href="@{'/properties/' + ${property.id} + '/edit'}">Edit Listing</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="detail-content">
+    <div class="detail-media">
+      <img th:if="${property.imageUrl != null and !#strings.isEmpty(property.imageUrl)}"
+           th:src="@{${property.imageUrl}}"
+           th:alt="${property.title}"
+           class="property-img property-img--large"/>
+      <img th:if="${property.imageUrl == null or #strings.isEmpty(property.imageUrl)}"
+           th:src="@{/img/default-property.svg}"
+           th:alt="'Placeholder image for ' + ${property.title}"
+           class="property-img property-img--large"/>
+      <article>
+        <h3>About this property</h3>
+        <p th:text="${property.description}">Description</p>
+      </article>
+    </div>
+
+    <aside class="detail-sidebar">
+      <div th:if="${successMessage}" class="flash success" th:text="${successMessage}">Success</div>
+      <h3>Request a visit</h3>
+      <form method="post"
+            th:object="${enquiryForm}"
+            th:action="@{'/properties/' + ${property.id} + '/enquiries'}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+        <label>Name
+          <input type="text" th:field="*{name}" placeholder="Your full name"/>
+          <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</small>
+        </label>
+
+        <label>Email
+          <input type="email" th:field="*{email}" placeholder="you@email.com"/>
+          <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</small>
+        </label>
+
+        <label>Phone
+          <input type="text" th:field="*{phone}" placeholder="+91 90000 00000"/>
+          <small class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">Phone error</small>
+        </label>
+
+        <label>Message
+          <textarea th:field="*{message}" rows="4"
+                    placeholder="Let us know your preferred visit dates and any notes"></textarea>
+          <small class="error" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Message error</small>
+        </label>
+
+        <button type="submit" class="link-button">Send enquiry</button>
+      </form>
+    </aside>
+  </section>
+</div>
+</body>
+</html>

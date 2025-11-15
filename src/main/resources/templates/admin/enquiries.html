@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Enquiries - RealNest Admin</title>
+  <link th:href="@{/css/base.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="container">
+  <div class="page-header">
+    <h2>Enquiries</h2>
+    <form method="get" th:action="@{/admin/enquiries}" class="form-inline">
+      <select name="status">
+        <option value="">All statuses</option>
+        <option th:each="s : ${statuses}"
+                th:value="${s}"
+                th:selected="${s == selectedStatus}"
+                th:text="${s}">NEW</option>
+      </select>
+      <button type="submit" class="link-button medium">Filter</button>
+    </form>
+  </div>
+  <div th:if="${successMessage}" class="flash" th:text="${successMessage}">Updated</div>
+  <table>
+    <thead>
+    <tr>
+      <th>Customer</th>
+      <th>Contact</th>
+      <th>Property</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th>Received</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${page == null or page.empty}">
+      <td colspan="6">No enquiries found.</td>
+    </tr>
+    <tr th:each="enquiry : ${page.content}">
+      <td th:text="${enquiry.name}">Name</td>
+      <td>
+        <div th:text="${enquiry.email}">email</div>
+        <small th:text="${enquiry.phone}">phone</small>
+      </td>
+      <td>
+        <a th:href="@{'/properties/' + ${enquiry.property.id}}"
+           th:text="${enquiry.property.title}">Property</a>
+      </td>
+      <td th:text="${enquiry.message}">Message</td>
+      <td>
+        <form method="post" th:action="@{'/admin/enquiries/' + ${enquiry.id} + '/status'}">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+          <select name="status">
+            <option th:each="s : ${statuses}"
+                    th:value="${s}"
+                    th:selected="${s == enquiry.status}"
+                    th:text="${s}">NEW</option>
+          </select>
+          <button type="submit" class="link-button secondary small">Update</button>
+        </form>
+      </td>
+      <td th:text="${#temporals.format(enquiry.createdAt, 'MMM d, yyyy HH:mm')}">Date</td>
+    </tr>
+    </tbody>
+  </table>
+  <div th:replace="~{fragments/pagination :: pager(${page}, '/admin/enquiries', ${searchParams})}"></div>
+</div>
+</body>
+</html>
+
