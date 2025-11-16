@@ -21,7 +21,7 @@
         <a class="link-button secondary" th:href="@{'/properties/' + ${p.id}}">View</a>
         <form th:action="@{/admin/approve/{id}(id=${p.id})}" method="post">
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-          <button type="submit">Approve</button>
+          <button type="submit" class="link-button success small">Approve</button>
         </form>
         <a class="link-button medium" th:href="@{'/admin/properties/' + ${p.id} + '/edit'}">Edit</a>
         <form th:action="@{'/admin/properties/' + ${p.id} + '/delete'}"

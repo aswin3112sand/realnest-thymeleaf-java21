@@ -1,116 +1,57 @@
 <header th:fragment="header"
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-  <div class="container navbar">
-    <a class="navbar-brand brand-heading" th:href="@{/}">RealNest</a>
-    <div class="menu-container">
-      <button class="menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="mobileMenuDropdown">
-        ☰ Menu
-      </button>
-      <div class="menu-dropdown" id="mobileMenuDropdown" role="menu">
-        <a th:href="@{/properties}">Browse</a>
-        <a th:href="@{/properties/new}" sec:authorize="isAuthenticated()">Add Listing</a>
-        <a th:href="@{/dashboard/me}" sec:authorize="isAuthenticated()">My Listings</a>
-        <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')">Dashboard</a>
-        <a th:href="@{/admin/customers}" sec:authorize="hasRole('ADMIN')">Customers</a>
-        <a th:href="@{/admin/enquiries}" sec:authorize="hasRole('ADMIN')">Enquiries</a>
-        <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Users</a>
-        <a th:href="@{/admin/approvals}" sec:authorize="hasRole('ADMIN')">Approvals</a>
-        <a th:href="@{/user/profile}" sec:authorize="isAuthenticated()">My Profile</a>
-        <a th:href="@{/register}" sec:authorize="!isAuthenticated()">Register</a>
-        <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-        <button type="button" class="dropdown-logout logout-trigger" sec:authorize="isAuthenticated()">Logout</button>
+  <div class="rn-header">
+    <div class="rn-header-left">
+      <a class="rn-logo" th:href="@{/}">RealNest</a>
+    </div>
+    <nav class="rn-header-center" aria-label="Primary navigation">
+      <ul class="rn-nav-list">
+        <li><a class="rn-nav-link" th:href="@{/properties}">Browse</a></li>
+        <li sec:authorize="isAuthenticated()">
+          <a class="rn-nav-link" th:href="@{/dashboard/me}">My List</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a class="rn-nav-link" th:href="@{/admin/dashboard}">Admin</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a class="rn-nav-link" th:href="@{/admin/customers}">Customers</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a class="rn-nav-link" th:href="@{/admin/enquiries}">Enquiries</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a class="rn-nav-link" th:href="@{/admin/users}">Users</a>
+        </li>
+        <li sec:authorize="hasRole('ADMIN')">
+          <a class="rn-nav-link" th:href="@{/admin/approvals}">Approvals</a>
+        </li>
+        <li sec:authorize="isAuthenticated()">
+          <a class="rn-nav-link" th:href="@{/properties/new}">Add Listing</a>
+        </li>
+        <li sec:authorize="isAuthenticated()">
+          <a class="rn-nav-link" th:href="@{/user/profile}">Profile</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="rn-header-right">
+      <div class="rn-user" sec:authorize="isAuthenticated()">
+        <span class="rn-badge-text">Signed in as</span>
+        <strong class="rn-user-email" th:text="${#authentication.principal.username}">
+          user@example.com
+        </strong>
+      </div>
+      <form th:action="@{/logout}"
+            method="post"
+            class="rn-logout-form"
+            sec:authorize="isAuthenticated()">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <button type="submit" class="rn-btn rn-btn-outline">Logout</button>
+      </form>
+      <div class="rn-auth-actions" sec:authorize="!isAuthenticated()">
+        <a class="rn-btn rn-btn-outline" th:href="@{/login}">Login</a>
+        <a class="rn-btn rn-btn-primary" th:href="@{/register}">Register</a>
       </div>
     </div>
-    <div class="nav-links">
-      <a th:href="@{/properties}">Browse</a>
-      <a th:href="@{/properties/new}" sec:authorize="isAuthenticated()">Add Listing</a>
-      <a th:href="@{/dashboard/me}" sec:authorize="isAuthenticated()">My Listings</a>
-      <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')">Dashboard</a>
-      <a th:href="@{/admin/customers}" sec:authorize="hasRole('ADMIN')">Customers</a>
-      <a th:href="@{/admin/enquiries}" sec:authorize="hasRole('ADMIN')">Enquiries</a>
-      <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Users</a>
-      <a th:href="@{/admin/approvals}" sec:authorize="hasRole('ADMIN')">Approvals</a>
-      <a th:href="@{/user/profile}" sec:authorize="isAuthenticated()">My Profile</a>
-      <span sec:authorize="isAuthenticated()">
-        Hi,&nbsp;<strong sec:authentication="name">user@realnest.com</strong>
-      </span>
-      <a th:href="@{/register}" sec:authorize="!isAuthenticated()">Register</a>
-      <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Login</a>
-      <button type="button" class="theme-toggle" aria-label="Toggle dark mode">
-        <span class="icon-sun" aria-hidden="true">☀</span>
-        <span class="icon-moon" aria-hidden="true">🌙</span>
-      </button>
-      <button class="link-button medium logout-trigger" type="button" sec:authorize="isAuthenticated()">
-        Logout
-      </button>
-    </div>
   </div>
-  <form id="logoutForm" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display:none;">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-  </form>
-  <script>
-    (function() {
-      const storageKey = 'theme';
-      const body = document.body;
-      const savedTheme = localStorage.getItem(storageKey);
-
-      if (savedTheme === 'dark') {
-        body.dataset.theme = 'dark';
-      } else if (!savedTheme || savedTheme === 'light') {
-        body.removeAttribute('data-theme');
-      }
-
-      const toggle = document.querySelector('.theme-toggle');
-      if (toggle) {
-        toggle.addEventListener('click', function() {
-          const isDark = body.dataset.theme === 'dark';
-          if (isDark) {
-            body.removeAttribute('data-theme');
-            localStorage.setItem(storageKey, 'light');
-          } else {
-            body.dataset.theme = 'dark';
-            localStorage.setItem(storageKey, 'dark');
-          }
-        });
-      }
-
-      const logoutTriggers = document.querySelectorAll('.logout-trigger');
-      const logoutForm = document.getElementById('logoutForm');
-      if (logoutTriggers.length && logoutForm) {
-        logoutTriggers.forEach(function(trigger) {
-          trigger.addEventListener('click', function() {
-            logoutForm.submit();
-          });
-        });
-      }
-
-      const menuBtn = document.querySelector('.menu-btn');
-      const menuDropdown = document.querySelector('.menu-dropdown');
-      if (menuBtn && menuDropdown) {
-        const closeMenu = function() {
-          menuDropdown.classList.remove('open');
-          menuBtn.setAttribute('aria-expanded', 'false');
-        };
-
-        menuBtn.addEventListener('click', function(event) {
-          event.stopPropagation();
-          const isOpen = menuDropdown.classList.toggle('open');
-          menuBtn.setAttribute('aria-expanded', String(isOpen));
-        });
-
-        document.addEventListener('click', function(event) {
-          if (!menuBtn.contains(event.target) && !menuDropdown.contains(event.target)) {
-            closeMenu();
-          }
-        });
-
-        document.addEventListener('keydown', function(event) {
-          if (event.key === 'Escape') {
-            closeMenu();
-          }
-        });
-      }
-    })();
-  </script>
 </header>

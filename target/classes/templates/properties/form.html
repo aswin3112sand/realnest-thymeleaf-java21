@@ -47,7 +47,16 @@
       <label for="image">Image</label>
       <input id="image" type="file" name="image" accept="image/*"/>
     </div>
-    <button type="submit">Submit</button>
+    <div class="form-actions form-actions--end">
+      <a class="link-button secondary"
+         th:href="${adminEdit} ? @{/admin/approvals} : (${editing} ? @{/dashboard/me} : @{/properties})">
+        Cancel
+      </a>
+      <button class="link-button medium" type="submit"
+              th:text="${editing} ? 'Update listing' : 'Publish listing'">
+        Publish listing
+      </button>
+    </div>
   </form>
 </div>
 </body>

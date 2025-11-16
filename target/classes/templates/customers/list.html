@@ -10,7 +10,7 @@
 <div class="container">
   <div class="page-header">
     <h2>Customers</h2>
-    <a class="link-button" th:href="@{/admin/customers/new}">Add Customer</a>
+    <a class="link-button medium" th:href="@{/admin/customers/new}">Add Customer</a>
   </div>
   <div th:if="${successMessage}" class="flash" th:text="${successMessage}">Saved</div>
   <table>
@@ -38,8 +38,13 @@
              alt="Customer photo"/>
       </td>
       <td>
-        <a th:href="@{'/admin/customers/edit/' + ${c.id}}">Edit</a>
-        <a th:href="@{'/admin/customers/delete/' + ${c.id}}" onclick="return confirm('Delete this customer?');">Delete</a>
+        <div class="table-actions">
+          <a class="link-button secondary small"
+             th:href="@{'/admin/customers/edit/' + ${c.id}}">Edit</a>
+          <a class="link-button danger small"
+             th:href="@{'/admin/customers/delete/' + ${c.id}}"
+             onclick="return confirm('Delete this customer?');">Delete</a>
+        </div>
       </td>
     </tr>
     </tbody>
