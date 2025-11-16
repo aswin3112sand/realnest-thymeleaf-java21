@@ -5,7 +5,9 @@
     <div class="rn-header-left">
       <a class="rn-logo" th:href="@{/}">RealNest</a>
     </div>
-    <nav class="rn-header-center" aria-label="Primary navigation">
+    <nav class="rn-header-center"
+         aria-label="Primary navigation"
+         sec:authorize="isAuthenticated()">
       <ul class="rn-nav-list">
         <li><a class="rn-nav-link" th:href="@{/properties}">Browse</a></li>
         <li sec:authorize="isAuthenticated()">
