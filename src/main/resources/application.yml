@@ -1,0 +1,60 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: realnest
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  messages:
+    basename: messages
+  thymeleaf:
+    cache: false
+  sql:
+    init:
+      mode: always
+  jpa:
+    defer-datasource-initialization: true
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:your-cloud-name}
+  api-key: ${CLOUDINARY_API_KEY:your-api-key}
+  api-secret: ${CLOUDINARY_API_SECRET:your-api-secret}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:realnest;DB_CLOSE_DELAY=-1;MODE=MySQL
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL:${JDBC_DATABASE_URL}}
+    username: ${SPRING_DATASOURCE_USERNAME:${JDBC_DATABASE_USERNAME}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${JDBC_DATABASE_PASSWORD}}
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
